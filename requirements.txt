@@ -1,5 +1,5 @@
-Flask
-Flask-Corsa
+flask
+flask-Corsa
 joblib
 numpy
 scikit-learn
