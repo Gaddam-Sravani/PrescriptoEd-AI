@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Intelligence Workspace — PrescriptoEd AI</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg style="width:20px;height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </div>
+      <div>
+        <h1>PrescriptoEd AI</h1>
+        <p>Institutional Administration & Faculty Intelligence</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="admin-badge">Head of Department / Dean Admin</div>
+      <a href="logout.html" class="btn-logout">
+        <svg style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        Sign Out
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Macro Metrics Bar -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Monitored Students</div>
+        <div class="kpi-val" id="kpi-total-students">--</div>
+        <div class="kpi-sub">Across active cohorts</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">At-Risk Student Ratio</div>
+        <div class="kpi-val" id="kpi-critical-students" style="color:var(--rose);">--</div>
+        <div class="kpi-sub">Risk Score &gt; 65%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Evaluated Faculty Members</div>
+        <div class="kpi-val" id="kpi-total-faculty">--</div>
+        <div class="kpi-sub">Teaching staff active</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Institutional Mean Rating</div>
+        <div class="kpi-val" id="kpi-avg-rating" style="color:var(--amber);">-- / 5.0</div>
+        <div class="kpi-sub">Inverse-risk weighted index</div>
+      </div>
+    </section>
+
+    <!-- Main Workspace Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="tab-faculty" onclick="switchAdminTab('tab-faculty')">
+        Faculty Performance & Risk Ratings
+      </button>
+      <button class="tab-btn" data-tab="tab-students" onclick="switchAdminTab('tab-students')">
+        Departmental Student Roster
+      </button>
+    </div>
+
+    <!-- Faculty Analytics Tab -->
+    <div class="tab-panel active" id="tab-faculty">
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div>
+            <h3>Faculty Scorecard & Student Risk Assessment</h3>
+            <p>Faculty performance ratings dynamically synthesized from enrolled student attrition velocity, midterm marks, and attendance deficit.</p>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Teacher Name</th>
+              <th>Department</th>
+              <th>Assigned Subject</th>
+              <th>Enrolled Cohort</th>
+              <th>Student Avg Risk</th>
+              <th>Computed Rating</th>
+              <th>Faculty Standing</th>
+            </tr>
+          </thead>
+          <tbody id="faculty-table-body">
+            <!-- Injected via admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Department Students Tab -->
+    <div class="tab-panel" id="tab-students">
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div>
+            <h3>Departmental Student Risk Directory</h3>
+            <p>Inspect academic trajectories, active arrears, and predicted semester pass velocity.</p>
+          </div>
+          <div class="filter-group">
+            <label for="dept-select">Filter Department:</label>
+            <select id="dept-select" onchange="filterStudentsByDept(this.value)">
+              <option value="ALL">All Departments</option>
+              <option value="CSE">Computer Science & Engineering (CSE)</option>
+              <option value="ECE">Electronics & Communication (ECE)</option>
+              <option value="MECH">Mechanical Engineering (MECH)</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Roll ID</th>
+              <th>Student Name</th>
+              <th>Department</th>
+              <th>Year / Batch</th>
+              <th>Backlogs</th>
+              <th>Calculated Risk</th>
+              <th>Intervention Status</th>
+            </tr>
+          </thead>
+          <tbody id="students-table-body">
+            <!-- Injected via admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
