@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Portal — PrescriptoEd AI</title>
+  <style>
+    body { background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .login-card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; width: 100%; max-width: 380px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); }
+    h2 { margin-top: 0; font-size: 1.25rem; color: #fff; }
+    p { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1.5rem; }
+    .input-group { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.75rem; color: #cbd5e1; margin-bottom: 0.3rem; font-weight: 600; }
+    input, select { width: 100%; padding: 0.65rem; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; font-size: 0.85rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #6366f1; }
+    button { width: 100%; padding: 0.75rem; background: #6366f1; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
+    button:hover { background: #4f46e5; }
+    .credentials-hint { margin-top: 1rem; font-size: 0.7rem; color: #64748b; background: rgba(15, 23, 42, 0.5); padding: 0.5rem; border-radius: 4px; line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <h2>PrescriptoEd AI Portal</h2>
+    <p>Select your persona and sign in.</p>
+    
+    <form id="login-form" autocomplete="off" onsubmit="handleLogin(event)">
+      <div class="input-group">
+        <label>Select Role / Persona</label>
+        <select id="role-select">
+          <option value="student">Student</option>
+          <option value="faculty">Faculty / Mentor</option>
+          <option value="dean">Dean / Administrator</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>User ID / Roll ID</label>
+        <input type="text" id="id-input" placeholder="e.g. STU1042 or FAC001" autocomplete="off" required>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="pass-input" placeholder="••••••••" autocomplete="new-password" required>
+      </div>
+      <button type="submit">Authenticate Session</button>
+    </form>
+
+    <div class="credentials-hint">
+      <b>Test Credentials:</b><br>
+      • <b>Student:</b> STU1042 | pass1042<br>
+      • <b>Faculty:</b> FAC001 | passFac1<br>
+      • <b>Dean:</b> DEAN001 | passDean1
+    </div>
+  </div>
+
+  <script>
+    async function handleLogin(e) {
+      e.preventDefault();
+      const role = document.getElementById("role-select").value;
+      const userId = document.getElementById("id-input").value.trim();
+      const password = document.getElementById("pass-input").value.trim();
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ role: role, user_id: userId, password: password })
+        });
+        
+        const data = await res.json();
+        if (data.status === "success") {
+          sessionStorage.setItem("prescriptoed_user", JSON.stringify(data.user));
+          window.location.href = data.redirect;
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        alert("Failed to connect to backend server.");
+      }
+    }
+  </script>
+</body>
+</html>
