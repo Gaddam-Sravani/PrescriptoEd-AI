@@ -15,7 +15,7 @@ const adminDatabase = {
     { id: "FAC108", name: "Dr. R. Verma", department: "MECH", subjectCode: "ME301", subjectName: "Thermodynamics & Heat Transfer", targetStudents: ["STU3001"] }
   ],
   students: [
-    { rollNo: "STU1042", name: "Rahul Sharma", department: "CSE", batch: "2024–2028 (Year 3)", backlogs: 2, riskScore: 78 },
+    { rollNo: "STU1042", name: "Sravani Gaddam", department: "CSE", batch: "2024–2028 (Year 3)", backlogs: 0, riskScore: 35 },
     { rollNo: "STU1043", name: "Pooja Verma", department: "CSE", batch: "2024–2028 (Year 3)", backlogs: 0, riskScore: 22 },
     { rollNo: "STU1044", name: "Karthik Subramanian", department: "CSE", batch: "2024–2028 (Year 3)", backlogs: 1, riskScore: 54 },
     { rollNo: "STU1045", name: "Sneha Patel", department: "CSE", batch: "2024–2028 (Year 3)", backlogs: 3, riskScore: 84 },
@@ -152,3 +152,4 @@ document.addEventListener("DOMContentLoaded", () => {
   renderFacultyTable();
   renderStudentsTable("ALL");
 });
+```[cite: 6]
