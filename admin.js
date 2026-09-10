@@ -53,6 +53,7 @@ function computeTeacherAnalytics(teacher) {
 
 function renderFacultyTable() {
   const tbody = document.getElementById("faculty-table-body");
+  if (!tbody) return;
   tbody.innerHTML = "";
   let totalRatings = 0;
 
@@ -89,11 +90,13 @@ function renderFacultyTable() {
   });
 
   const avgInstRating = (totalRatings / adminDatabase.faculty.length).toFixed(1);
-  document.getElementById("kpi-avg-rating").innerText = `${avgInstRating} / 5.0`;
+  const ratingEl = document.getElementById("kpi-avg-rating");
+  if (ratingEl) ratingEl.innerText = `${avgInstRating} / 5.0`;
 }
 
 function renderStudentsTable(deptFilter = "ALL") {
   const tbody = document.getElementById("students-table-body");
+  if (!tbody) return;
   tbody.innerHTML = "";
 
   const filtered = deptFilter === "ALL" 
@@ -134,22 +137,26 @@ function updateKPICounters() {
   const totalStudents = adminDatabase.students.length;
   const criticalCount = adminDatabase.students.filter(s => s.riskScore >= 65).length;
 
-  document.getElementById("kpi-total-students").innerText = totalStudents;
-  document.getElementById("kpi-critical-students").innerText = `${criticalCount} (${Math.round((criticalCount / totalStudents) * 100)}%)`;
-  document.getElementById("kpi-total-faculty").innerText = adminDatabase.faculty.length;
+  const totalStudentsEl = document.getElementById("kpi-total-students");
+  const criticalStudentsEl = document.getElementById("kpi-critical-students");
+  const totalFacultyEl = document.getElementById("kpi-total-faculty");
+
+  if (totalStudentsEl) totalStudentsEl.innerText = totalStudents;
+  if (criticalStudentsEl) criticalStudentsEl.innerText = `${criticalCount} (${Math.round((criticalCount / totalStudents) * 100)}%)`;
+  if (totalFacultyEl) totalFacultyEl.innerText = adminDatabase.faculty.length;
 }
 
 function switchAdminTab(tabId) {
   document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
   document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
 
-  document.querySelector(`[data-tab="${tabId}"]`).classList.add("active");
-  document.getElementById(tabId).classList.add("active");
+  const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
+  const targetPanel = document.getElementById(tabId);
+  if (targetBtn) targetBtn.classList.add("active");
+  if (targetPanel) targetPanel.classList.add("active");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateKPICounters();
-  renderFacultyTable();
-  renderStudentsTable("ALL");
-});
-```[cite: 6]
+// Execute immediately upon script load
+updateKPICounters();
+renderFacultyTable();
+renderStudentsTable("ALL");
